@@ -19,9 +19,9 @@ import { useState, useEffect } from "react";
 import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 👇 TROQUE AQUI quando tiver a URL de checkout da Cakto
+// 👇 URL de checkout
 // ─────────────────────────────────────────────────────────────────────────────
-const CAKTO_URL = "https://pay.cakto.com.br/4zjc4ku_986033";
+const CHECKOUT_URL = "https://compraonlineseguura.com/c/c70abaaa49";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -238,7 +238,7 @@ function Hero() {
           </p>
 
           <a
-            href={CAKTO_URL}
+            href={CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -786,7 +786,7 @@ function WhatYouWillSee() {
 
       <div style={{ textAlign: "center", marginTop: "36px" }}>
         <a
-          href={CAKTO_URL}
+          href={CHECKOUT_URL}
           target="_blank"
           rel="noopener noreferrer"
           style={{
@@ -1076,7 +1076,7 @@ function UrgencyBanner() {
         </p>
 
         <a
-          href={CAKTO_URL}
+          href={CHECKOUT_URL}
           target="_blank"
           rel="noopener noreferrer"
           style={{
@@ -1237,7 +1237,7 @@ function Pricing() {
           </ul>
 
           <a
-            href={CAKTO_URL}
+            href={CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -1512,7 +1512,7 @@ function FinalCTA() {
           </p>
 
           <a
-            href={CAKTO_URL}
+            href={CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
             style={{

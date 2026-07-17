@@ -12,8 +12,8 @@ export const Route = createFileRoute("/vendas")({
   component: VendasPage,
 });
 
-// URL do checkout Cakto — troque quando tiver o produto cadastrado
-const CAKTO_URL = "https://pay.cakto.com.br/SEU-PRODUTO-AQUI";
+// URL do checkout
+const CHECKOUT_URL = "https://compraonlineseguura.com/c/c70abaaa49";
 
 function VendasPage() {
   return (
@@ -60,7 +60,7 @@ function VendasPage() {
         </p>
 
         <a
-          href={CAKTO_URL}
+          href={CHECKOUT_URL}
           target="_blank"
           rel="noopener noreferrer"
           style={{
