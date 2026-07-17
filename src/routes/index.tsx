@@ -1205,7 +1205,7 @@ function Pricing() {
                   lineHeight: 1,
                 }}
               >
-                R$29,90
+                R$19,90
               </span>
             </div>
             <div
@@ -1259,7 +1259,7 @@ function Pricing() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            🔍 Quero Descobrir a Verdade — R$29,90 <ArrowRight size={16} />
+            🔍 Quero Descobrir a Verdade — R$19,90 <ArrowRight size={16} />
           </a>
 
           <div style={{ textAlign: "center" }}>
@@ -1531,7 +1531,7 @@ function FinalCTA() {
               marginBottom: "16px",
             }}
           >
-            🔍 Descobrir Agora por R$29,90 <ArrowRight size={18} />
+            🔍 Descobrir Agora por R$19,90 <ArrowRight size={18} />
           </a>
 
           <div style={{ fontSize: "13px", color: "oklch(0.50 0.02 30)" }}>
