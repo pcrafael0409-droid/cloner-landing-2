@@ -77,13 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "EspionApp — Descubra a Verdade Agora" },
+      { title: "Espião — Descubra se Ela Está te Traindo" },
       {
         name: "description",
         content:
-          "Monitore WhatsApp e Instagram de forma totalmente anônima. Descubra se seu parceiro está te traindo. 100% discreto, instantâneo e seguro.",
+          "Monitore WhatsApp e Instagram de forma totalmente anônima. Descubra se sua parceira está te traindo. 100% discreto, instantâneo e seguro.",
       },
-      { property: "og:title", content: "EspionApp — Ele está te traindo?" },
+      { property: "og:title", content: "Espião — Ela está te traindo?" },
       {
         property: "og:description",
         content:

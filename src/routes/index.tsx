@@ -26,7 +26,7 @@ const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Espião — Descubra se Ele Está te Traindo" },
+      { title: "Espião — Descubra se Ela Está te Traindo" },
       {
         name: "description",
         content:
@@ -74,10 +74,10 @@ function LandingPage() {
 
 function UrgencyTicker() {
   const items = [
-    "💕 VAGAS LIMITADAS — apenas 47 disponíveis hoje",
+    "🔥 VAGAS LIMITADAS — apenas 47 disponíveis hoje",
     "⚠️ Oferta encerra em breve",
-    "✅ +47.000 mulheres já se libertaram da dúvida",
-    "🔒 100% anônimo — ele nunca saberá",
+    "✅ +47.000 homens já se libertaram da dúvida",
+    "🔒 100% anônimo — ela nunca saberá",
     "⚡ Acesso instantâneo após o pagamento",
   ];
   const doubled = [...items, ...items];
@@ -211,7 +211,7 @@ function Hero() {
               marginBottom: "20px",
             }}
           >
-            Ele está te{" "}
+            Ela está te{" "}
             <span
               style={{
                 color: "oklch(0.57 0.26 22)",
@@ -231,7 +231,7 @@ function Hero() {
               maxWidth: "520px",
             }}
           >
-            Descubra toda a verdade no WhatsApp e Instagram do seu parceiro —{" "}
+            Descubra toda a verdade no WhatsApp e Instagram da sua parceira —{" "}
             <strong style={{ color: "oklch(0.97 0.005 30)" }}>
               antes que seja tarde demais.
             </strong>
@@ -268,7 +268,7 @@ function Hero() {
                 "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)";
             }}
           >
-            💖 Descobrir a Verdade — Acesso Imediato
+            ⚡ Descobrir a Verdade — Acesso Imediato
             <ArrowRight size={18} />
           </a>
 
@@ -413,10 +413,10 @@ function Hero() {
                   <span>agora</span>
                 </div>
                 <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "2px" }}>
-                  Amor ❤️
+                  Gabriel 🤫
                 </div>
                 <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
-                  Pode vir, ela já dormiu...
+                  Ele já dormiu, pode me ligar...
                 </div>
               </div>
             </div>
@@ -468,7 +468,7 @@ function Hero() {
                   <span>2 min</span>
                 </div>
                 <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "2px" }}>
-                  @joice_silva
+                  @pedro_alves
                 </div>
                 <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
                   Você vem me ver hoje à noite? 🔥
@@ -488,7 +488,7 @@ function Hero() {
 
 function SocialProof() {
   const stats = [
-    { value: "+47.000", label: "mulheres libertas" },
+    { value: "+47.000", label: "homens libertos" },
     { value: "4.9★", label: "avaliação média" },
     { value: "100%", label: "anônimo e seguro" },
     { value: "<2 min", label: "para ter acesso" },
@@ -557,13 +557,13 @@ function HowItWorks() {
       num: "2",
       icon: <Eye size={28} color="oklch(0.57 0.26 22)" />,
       title: "Informe o número ou @",
-      body: "Digite o número de WhatsApp ou o @ do Instagram do seu parceiro. Não precisa de acesso ao celular dele.",
+      body: "Digite o número de WhatsApp ou o @ do Instagram da sua parceira. Não precisa de acesso ao celular dela.",
     },
     {
       num: "3",
       icon: <MessageCircle size={28} color="oklch(0.57 0.26 22)" />,
       title: "Veja tudo em tempo real",
-      body: "Conversas, fotos, vídeos, histórico — tudo aparece no seu painel. Ele nunca saberá que você está vendo.",
+      body: "Conversas, fotos, vídeos, histórico — tudo aparece no seu painel. Ela nunca saberá que você está vendo.",
     },
   ];
 
@@ -591,7 +591,7 @@ function HowItWorks() {
           <span style={{ color: "oklch(0.57 0.26 22)" }}>Em segredo.</span>
         </h2>
         <p style={{ color: "oklch(0.60 0.03 30)", marginTop: "12px", fontSize: "15px" }}>
-          Você não precisa ser especialista e nem pegar no celular dele. Nós fazemos o trabalho difícil para você.
+          Você não precisa ser especialista e nem pegar no celular dela. Nós fazemos o trabalho difícil para você.
         </p>
       </div>
 
@@ -694,12 +694,12 @@ function WhatYouWillSee() {
     {
       emoji: "📍",
       title: "Histórico de Localização",
-      body: "Veja onde ele esteve nas últimas 24h no mapa.",
+      body: "Veja onde ela esteve nas últimas 24h no mapa.",
     },
     {
       emoji: "👤",
       title: "Seguidores Secretos do Instagram",
-      body: "Perfis que ele segue em sigilo e quem interage com ele.",
+      body: "Perfis que ela segue em sigilo e quem interage com ela.",
     },
     {
       emoji: "🔍",
@@ -817,45 +817,45 @@ function WhatYouWillSee() {
 function Testimonials() {
   const items = [
     {
-      name: "Ana R.",
+      name: "Ricardo M.",
       city: "São Paulo, SP",
       stars: 5,
-      text: "Eu não conseguia mais dormir com a minha intuição gritando. Em menos de 10 minutos vi tudo. A dor de ver foi grande, mas a libertação de não ser mais enganada foi maior. Valeu cada centavo.",
+      text: "Eu não conseguia mais dormir com a minha intuição gritando. Em menos de 10 minutos vi tudo. A dor de ver foi grande, mas a libertação de não ser mais enganado foi maior. Valeu cada centavo.",
       time: "há 2 dias",
     },
     {
-      name: "Juliana M.",
+      name: "Lucas B.",
       city: "Belo Horizonte, MG",
       stars: 5,
-      text: "Achei que eu estava ficando louca, ele sempre dizia que era coisa da minha cabeça. Ver a verdade com meus próprios olhos me devolveu a paz e o controle da minha vida.",
+      text: "Achei que eu estava ficando louco, ela sempre dizia que era paranoia da minha cabeça. Ver a verdade com meus próprios olhos me devolveu a paz e o controle da minha vida.",
       time: "há 5 dias",
     },
     {
-      name: "Fernanda C.",
+      name: "Fernando C.",
       city: "Curitiba, PR",
       stars: 5,
-      text: "Minha amiga me indicou. Fiz o login, coloquei o número dele e em 2 minutos estava vendo as conversas dele. Simples demais. Recomendo para todas que têm dúvida.",
+      text: "Um amigo me indicou. Fiz o login, coloquei o número dela e em 2 minutos estava vendo as conversas dela. Simples demais. Recomendo para todo homem que tem dúvida.",
       time: "há 1 semana",
     },
     {
-      name: "Patricia L.",
+      name: "Paulo L.",
       city: "Rio de Janeiro, RJ",
       stars: 5,
-      text: "Foram meses chorando escondida achando que o problema era eu. Descobri tudo. Doeu muito, mas pelo menos pude tomar uma decisão com base na verdade e seguir em frente.",
+      text: "Foram meses desconfiado achando que o problema era comigo. Descobri tudo. Doeu muito, mas pelo menos pude tomar uma decisão com base na verdade e seguir em frente.",
       time: "há 1 semana",
     },
     {
-      name: "Camila S.",
+      name: "Carlos S.",
       city: "Recife, PE",
       stars: 5,
-      text: "Funcionou perfeitamente no Instagram dele. Vi os DMs que ele achava que eram secretos. A interface é muito fácil, qualquer uma consegue usar.",
+      text: "Funcionou perfeitamente no Instagram dela. Vi os DMs que ela achava que eram secretos. A interface é muito fácil, qualquer um consegue usar.",
       time: "há 2 semanas",
     },
     {
-      name: "Renata O.",
+      name: "Rodrigo O.",
       city: "Porto Alegre, RS",
       stars: 5,
-      text: "Fiquei em paz depois de ver. Ele realmente não estava traindo, só sendo estranho. Mas precisava saber. Serviço 100% anônimo, recomendo sem medo.",
+      text: "Fiquei em paz depois de ver. Ela realmente não estava me traindo, só conversando sobre assuntos de trabalho. Mas eu precisava ter certeza. Serviço 100% anônimo, recomendo sem medo.",
       time: "há 2 semanas",
     },
   ];
@@ -880,7 +880,7 @@ function Testimonials() {
             letterSpacing: "-0.02em",
           }}
         >
-          Mais de 47 mil mulheres já{" "}
+          Mais de 47 mil homens já{" "}
           <span style={{ color: "oklch(0.57 0.26 22)" }}>recuperaram sua paz</span>
         </h2>
         <div style={{ display: "flex", justifyContent: "center", gap: "4px", marginTop: "16px" }}>
@@ -1259,7 +1259,7 @@ function Pricing() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            💖 Quero a Minha Paz de Volta — R$19,90 <ArrowRight size={16} />
+            ⚡ Quero a Minha Paz de Volta — R$19,90 <ArrowRight size={16} />
           </a>
 
           <div style={{ textAlign: "center" }}>
@@ -1313,11 +1313,11 @@ function Pricing() {
 function FAQ() {
   const items = [
     {
-      q: "Ele vai saber que estou monitorando?",
-      a: "Não. O monitoramento é 100% invisível. Não aparece nenhuma notificação no celular dele, não muda nada no aplicativo dele e não deixa rastros. Ele nunca saberá.",
+      q: "Ela vai saber que estou monitorando?",
+      a: "Não. O monitoramento é 100% invisível. Não aparece nenhuma notificação no celular dela, não muda nada no aplicativo dela e não deixa rastros. Ela nunca saberá.",
     },
     {
-      q: "Preciso ter acesso ao celular dele para instalar algo?",
+      q: "Preciso ter acesso ao celular dela para instalar algo?",
       a: "Não! É exatamente por isso que o serviço é tão poderoso. Você só precisa informar o número de WhatsApp ou o @ do Instagram. Nada mais.",
     },
     {
@@ -1326,7 +1326,7 @@ function FAQ() {
     },
     {
       q: "E se não funcionar?",
-      a: "Temos garantia de 7 dias. Se por qualquer motivo você não ficar satisfeita, devolvemos 100% do seu dinheiro. Sem perguntas.",
+      a: "Temos garantia de 7 dias. Se por qualquer motivo você não ficar satisfeito, devolvemos 100% do seu dinheiro. Sem perguntas.",
     },
     {
       q: "Funciona com qualquer operadora?",
@@ -1334,7 +1334,7 @@ function FAQ() {
     },
     {
       q: "Meus dados estão seguros?",
-      a: "Sim. Todas as informações são criptografadas e você é a única com acesso ao painel. Não compartilhamos seus dados com ninguém.",
+      a: "Sim. Todas as informações são criptografadas e você é o único com acesso ao painel. Não compartilhamos seus dados com ninguém.",
     },
   ];
 
@@ -1481,7 +1481,7 @@ function FinalCTA() {
 
         <div style={{ position: "relative" }}>
           <div className="eye-neon" style={{ marginBottom: "16px", display: "inline-block" }}>
-            <Heart size={48} color="oklch(0.57 0.26 22)" fill="oklch(0.57 0.26 22 / 0.3)" />
+            <Zap size={48} color="oklch(0.57 0.26 22)" fill="oklch(0.57 0.26 22 / 0.3)" />
           </div>
 
           <h2
@@ -1506,7 +1506,7 @@ function FinalCTA() {
               margin: "0 auto 32px",
             }}
           >
-            Não fique mais acordada de madrugada com dúvida. Não viva mais na
+            Não fique mais acordado de madrugada com dúvida. Não viva mais na
             incerteza. Em menos de 2 minutos você terá as respostas que precisa —
             de forma segura, anônima e definitiva.
           </p>
@@ -1531,7 +1531,7 @@ function FinalCTA() {
               marginBottom: "16px",
             }}
           >
-            💖 Descobrir a Verdade Agora — R$19,90 <ArrowRight size={18} />
+            ⚡ Descobrir a Verdade Agora — R$19,90 <ArrowRight size={18} />
           </a>
 
           <div style={{ fontSize: "13px", color: "oklch(0.50 0.02 30)" }}>
@@ -1642,3 +1642,4 @@ function SectionBadge({ children }: { children: React.ReactNode }) {
     </span>
   );
 }
+
