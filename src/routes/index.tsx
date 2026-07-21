@@ -218,7 +218,7 @@ function Hero() {
                 textShadow: "0 0 40px oklch(0.57 0.26 22 / 0.5)",
               }}
             >
-              certa?
+              traindo?
             </span>
           </h1>
 
@@ -285,7 +285,7 @@ function Hero() {
               <ShieldCheck size={14} color="oklch(0.57 0.26 22)" /> 100% discreto
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <Lock size={14} color="oklch(0.57 0.26 22)" /> Sem ele perceber
+              <Lock size={14} color="oklch(0.57 0.26 22)" /> Sem notificações
             </div>
           </div>
         </div>
@@ -1136,8 +1136,8 @@ function Pricing() {
             letterSpacing: "-0.02em",
           }}
         >
-          Invista na sua{" "}
-          <span style={{ color: "oklch(0.57 0.26 22)" }}>não tem preço</span>
+          Quero descobrir{" "}
+          <span style={{ color: "oklch(0.57 0.26 22)" }}>toda a verdade</span>
         </h2>
         <p style={{ color: "oklch(0.60 0.03 30)", marginTop: "10px" }}>
           O valor para descobrir a verdade e voltar a dormir em paz.
