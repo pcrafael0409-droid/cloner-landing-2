@@ -74,9 +74,9 @@ function LandingPage() {
 
 function UrgencyTicker() {
   const items = [
-    "🔴 VAGAS LIMITADAS — apenas 47 disponíveis hoje",
+    "💕 VAGAS LIMITADAS — apenas 47 disponíveis hoje",
     "⚠️ Oferta encerra em breve",
-    "✅ +47.000 mulheres já descobriram a verdade",
+    "✅ +47.000 mulheres já se libertaram da dúvida",
     "🔒 100% anônimo — ele nunca saberá",
     "⚡ Acesso instantâneo após o pagamento",
   ];
@@ -218,7 +218,7 @@ function Hero() {
                 textShadow: "0 0 40px oklch(0.57 0.26 22 / 0.5)",
               }}
             >
-              traindo?
+              certa?
             </span>
           </h1>
 
@@ -268,7 +268,7 @@ function Hero() {
                 "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)";
             }}
           >
-            🔍 Descobrir Agora — Acesso Imediato
+            💖 Descobrir a Verdade — Acesso Imediato
             <ArrowRight size={18} />
           </a>
 
@@ -488,7 +488,7 @@ function Hero() {
 
 function SocialProof() {
   const stats = [
-    { value: "+47.000", label: "mulheres usaram" },
+    { value: "+47.000", label: "mulheres libertas" },
     { value: "4.9★", label: "avaliação média" },
     { value: "100%", label: "anônimo e seguro" },
     { value: "<2 min", label: "para ter acesso" },
@@ -588,10 +588,10 @@ function HowItWorks() {
           }}
         >
           Simples. Rápido.{" "}
-          <span style={{ color: "oklch(0.57 0.26 22)" }}>Indetectável.</span>
+          <span style={{ color: "oklch(0.57 0.26 22)" }}>Em segredo.</span>
         </h2>
         <p style={{ color: "oklch(0.60 0.03 30)", marginTop: "12px", fontSize: "15px" }}>
-          3 passos e você tem acesso a tudo. Sem precisar pegar o celular dele.
+          Você não precisa ser especialista e nem pegar no celular dele. Nós fazemos o trabalho difícil para você.
         </p>
       </div>
 
@@ -732,8 +732,8 @@ function WhatYouWillSee() {
             letterSpacing: "-0.02em",
           }}
         >
-          Acesso completo a{" "}
-          <span style={{ color: "oklch(0.57 0.26 22)" }}>tudo que ele esconde</span>
+          A verdade que a sua{" "}
+          <span style={{ color: "oklch(0.57 0.26 22)" }}>intuição já sabe</span>
         </h2>
       </div>
 
@@ -803,7 +803,7 @@ function WhatYouWillSee() {
             boxShadow: "0 0 30px oklch(0.57 0.26 22 / 0.4)",
           }}
         >
-          Quero Ver Agora <ArrowRight size={16} />
+          Quero Minha Paz de Volta <ArrowRight size={16} />
         </a>
       </div>
     </section>
@@ -820,14 +820,14 @@ function Testimonials() {
       name: "Ana R.",
       city: "São Paulo, SP",
       stars: 5,
-      text: "Eu desconfiava fazia meses mas nunca tinha prova. Em menos de 10 minutos já vi tudo. Estava certo. Me preparei com calma antes de confrontar ele. Valeu cada centavo.",
+      text: "Eu não conseguia mais dormir com a minha intuição gritando. Em menos de 10 minutos vi tudo. A dor de ver foi grande, mas a libertação de não ser mais enganada foi maior. Valeu cada centavo.",
       time: "há 2 dias",
     },
     {
       name: "Juliana M.",
       city: "Belo Horizonte, MG",
       stars: 5,
-      text: "Achei que fosse golpe mas resolvi tentar. Funcionou perfeitamente e ele não percebeu absolutamente nada. Agora tenho paz de saber que estava sendo paranoia minha mesmo.",
+      text: "Achei que eu estava ficando louca, ele sempre dizia que era coisa da minha cabeça. Ver a verdade com meus próprios olhos me devolveu a paz e o controle da minha vida.",
       time: "há 5 dias",
     },
     {
@@ -841,7 +841,7 @@ function Testimonials() {
       name: "Patricia L.",
       city: "Rio de Janeiro, RJ",
       stars: 5,
-      text: "Descobri que estava sendo traída há 8 meses. Doeu muito mas pelo menos pude tomar uma decisão com base na verdade. Obrigada por isso.",
+      text: "Foram meses chorando escondida achando que o problema era eu. Descobri tudo. Doeu muito, mas pelo menos pude tomar uma decisão com base na verdade e seguir em frente.",
       time: "há 1 semana",
     },
     {
@@ -881,7 +881,7 @@ function Testimonials() {
           }}
         >
           Mais de 47 mil mulheres já{" "}
-          <span style={{ color: "oklch(0.57 0.26 22)" }}>descobriram a verdade</span>
+          <span style={{ color: "oklch(0.57 0.26 22)" }}>recuperaram sua paz</span>
         </h2>
         <div style={{ display: "flex", justifyContent: "center", gap: "4px", marginTop: "16px" }}>
           {[1, 2, 3, 4, 5].map((i) => (
@@ -1137,10 +1137,10 @@ function Pricing() {
           }}
         >
           Invista na sua{" "}
-          <span style={{ color: "oklch(0.57 0.26 22)" }}>tranquilidade</span>
+          <span style={{ color: "oklch(0.57 0.26 22)" }}>não tem preço</span>
         </h2>
         <p style={{ color: "oklch(0.60 0.03 30)", marginTop: "10px" }}>
-          Menos que um jantar. Muito mais valioso.
+          O valor para descobrir a verdade e voltar a dormir em paz.
         </p>
       </div>
 
@@ -1259,7 +1259,7 @@ function Pricing() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            🔍 Quero Descobrir a Verdade — R$19,90 <ArrowRight size={16} />
+            💖 Quero a Minha Paz de Volta — R$19,90 <ArrowRight size={16} />
           </a>
 
           <div style={{ textAlign: "center" }}>
@@ -1531,7 +1531,7 @@ function FinalCTA() {
               marginBottom: "16px",
             }}
           >
-            🔍 Descobrir Agora por R$19,90 <ArrowRight size={18} />
+            💖 Descobrir a Verdade Agora — R$19,90 <ArrowRight size={18} />
           </a>
 
           <div style={{ fontSize: "13px", color: "oklch(0.50 0.02 30)" }}>
