@@ -21,7 +21,7 @@ import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 // ─────────────────────────────────────────────────────────────────────────────
 // 👇 URL de checkout
 // ─────────────────────────────────────────────────────────────────────────────
-const CHECKOUT_URL = "https://compraonlineseguura.com/c/c70abaaa49";
+const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
 
 export const Route = createFileRoute("/")({
   head: () => ({

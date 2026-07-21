@@ -13,7 +13,7 @@ export const Route = createFileRoute("/vendas")({
 });
 
 // URL do checkout
-const CHECKOUT_URL = "https://compraonlineseguura.com/c/c70abaaa49";
+const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
 
 function VendasPage() {
   return (
