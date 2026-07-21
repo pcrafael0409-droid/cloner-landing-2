@@ -413,10 +413,10 @@ function Hero() {
                   <span>agora</span>
                 </div>
                 <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "2px" }}>
-                  Gabriel 🤫
+                  Amor ❤️
                 </div>
                 <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
-                  Ele já dormiu, pode me ligar...
+                  Pode vir, ele já dormiu...
                 </div>
               </div>
             </div>
