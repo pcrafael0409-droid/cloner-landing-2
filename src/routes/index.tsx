@@ -107,7 +107,7 @@ function clearFunnelMetrics() {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Espião — Teste de Compatibilidade & Monitoramento" },
+      { title: "CloneX — Teste de Compatibilidade & Monitoramento" },
       {
         name: "description",
         content:
@@ -411,7 +411,7 @@ function QuizFunnel({
                 letterSpacing: "-0.02em",
               }}
             >
-              Espião
+              Clone<span style={{ color: "oklch(0.57 0.26 22)" }}>X</span>
             </span>
           </div>
 
@@ -2720,7 +2720,7 @@ function Footer() {
               fontSize: "15px",
             }}
           >
-            Espião
+            Clone<span style={{ color: "oklch(0.57 0.26 22)" }}>X</span>
           </span>
         </div>
 
@@ -2738,7 +2738,7 @@ function Footer() {
         </div>
 
         <span style={{ fontSize: "11px", color: "oklch(0.40 0.02 30)" }}>
-          © {new Date().getFullYear()} Espião. Todos os direitos reservados.
+          © {new Date().getFullYear()} CloneX. Todos os direitos reservados.
         </span>
       </div>
 

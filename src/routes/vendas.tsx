@@ -4,8 +4,8 @@ import { ArrowLeft, Eye } from "lucide-react";
 export const Route = createFileRoute("/vendas")({
   head: () => ({
     meta: [
-      { title: "Espião — Checkout" },
-      { name: "description", content: "Finalize seu acesso ao Espião." },
+      { title: "CloneX — Checkout" },
+      { name: "description", content: "Finalize seu acesso ao CloneX." },
       { name: "robots", content: "noindex" },
     ],
   }),
