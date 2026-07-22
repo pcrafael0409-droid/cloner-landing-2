@@ -1110,7 +1110,7 @@ function MetricsModal({ onClose }: { onClose: () => void }) {
           }}
         >
           <div style={{ fontSize: "12px", color: "oklch(0.70 0.03 30)", textTransform: "uppercase", fontWeight: 700 }}>
-            Taxa Geral de Conversão do Funil (Quiz -> Checkout)
+            Taxa Geral de Conversão do Funil (Quiz ➔ Checkout)
           </div>
           <div style={{ fontSize: "28px", fontWeight: 800, color: "white", marginTop: "4px" }}>
             {step1 > 0 ? ((checkout / step1) * 100).toFixed(1) : 0}%
