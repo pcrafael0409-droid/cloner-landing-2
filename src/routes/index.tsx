@@ -14,6 +14,13 @@ import {
   Smartphone,
   Zap,
   Users,
+  BarChart3,
+  Check,
+  RefreshCw,
+  X,
+  ChevronRight,
+  Activity,
+  Search,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
@@ -23,14 +30,88 @@ import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 // ─────────────────────────────────────────────────────────────────────────────
 const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
 
+// ─────────────────────────────────────────────────────────────────────────────
+// FUNNEL TRACKING SYSTEM (Local Storage & Analytics Dispatcher)
+// ─────────────────────────────────────────────────────────────────────────────
+type FunnelStep =
+  | "quiz_step_1"
+  | "quiz_step_2"
+  | "quiz_step_3"
+  | "quiz_step_4"
+  | "analyzing"
+  | "landing_page"
+  | "checkout_click";
+
+function trackFunnelEvent(step: FunnelStep, extraData?: Record<string, any>) {
+  if (typeof window === "undefined") return;
+
+  try {
+    // Save to LocalStorage stats counter for live dashboard
+    const storageKey = "esplao_funnel_metrics_v1";
+    const raw = localStorage.getItem(storageKey);
+    const data = raw
+      ? JSON.parse(raw)
+      : {
+          quiz_step_1: 0,
+          quiz_step_2: 0,
+          quiz_step_3: 0,
+          quiz_step_4: 0,
+          analyzing: 0,
+          landing_page: 0,
+          checkout_click: 0,
+          history: [],
+        };
+
+    data[step] = (data[step] || 0) + 1;
+    data.history.push({
+      step,
+      timestamp: new Date().toISOString(),
+      extraData: extraData || null,
+    });
+
+    // Keep history clean (last 100 events)
+    if (data.history.length > 100) {
+      data.history = data.history.slice(-100);
+    }
+
+    localStorage.setItem(storageKey, JSON.stringify(data));
+
+    // Optional: Dispatch to window analytics if Google Analytics or Pixel exists
+    if ((window as any).gtag) {
+      (window as any).gtag("event", step, {
+        event_category: "quiz_funnel",
+        ...extraData,
+      });
+    }
+  } catch (err) {
+    console.error("Tracking error:", err);
+  }
+}
+
+function getFunnelMetrics() {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem("esplao_funnel_metrics_v1");
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+function clearFunnelMetrics() {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem("esplao_funnel_metrics_v1");
+}
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Espião — Descubra se Ela Está te Traindo" },
+      { title: "Espião — Teste de Compatibilidade & Monitoramento" },
       {
         name: "description",
         content:
-          "Monitore WhatsApp e Instagram de forma totalmente anônima. Descubra a verdade antes que seja tarde demais. 100% discreto e instantâneo.",
+          "Descubra em 2 minutos se sua parceira apresenta sinais de conversas ocultas no WhatsApp e Instagram. 100% anônimo e seguro.",
       },
     ],
   }),
@@ -38,10 +119,37 @@ export const Route = createFileRoute("/")({
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENTE PRINCIPAL
+// COMPONENTE PRINCIPAL (GERENCIADOR DE ESTADOS DO FUNIL)
 // ─────────────────────────────────────────────────────────────────────────────
 
 function LandingPage() {
+  const [currentStep, setCurrentStep] = useState<"quiz" | "analyzing" | "landing">("quiz");
+  const [targetInput, setTargetInput] = useState("");
+  const [answers, setAnswers] = useState<Record<number, any>>({});
+  const [showMetricsModal, setShowMetricsModal] = useState(false);
+
+  useEffect(() => {
+    // Initial tracking event when landing
+    trackFunnelEvent("quiz_step_1");
+  }, []);
+
+  const handleQuizComplete = (target: string, userAnswers: Record<number, any>) => {
+    setTargetInput(target);
+    setAnswers(userAnswers);
+    setCurrentStep("analyzing");
+    trackFunnelEvent("analyzing", { target });
+  };
+
+  const handleAnalysisFinish = () => {
+    setCurrentStep("landing");
+    trackFunnelEvent("landing_page");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleCheckoutClick = () => {
+    trackFunnelEvent("checkout_click");
+  };
+
   return (
     <div
       style={{
@@ -51,19 +159,1006 @@ function LandingPage() {
         fontFamily: "'Inter', system-ui, sans-serif",
       }}
     >
-      <UrgencyTicker />
-      <main>
-        <Hero />
-        <SocialProof />
-        <HowItWorks />
-        <WhatYouWillSee />
-        <Testimonials />
-        <UrgencyBanner />
-        <Pricing />
-        <FAQ />
-        <FinalCTA />
-      </main>
-      <Footer />
+      {/* Botão flutuante discreto para ver Métricas do Funil (Admin / Dono do site) */}
+      <button
+        onClick={() => setShowMetricsModal(true)}
+        title="Ver Métricas de Conversão & Abandono"
+        style={{
+          position: "fixed",
+          bottom: "16px",
+          right: "16px",
+          zIndex: 9999,
+          background: "rgba(20, 20, 20, 0.85)",
+          border: "1px solid oklch(0.57 0.26 22 / 0.4)",
+          color: "oklch(0.85 0.12 22)",
+          borderRadius: "999px",
+          padding: "8px 14px",
+          fontSize: "12px",
+          fontWeight: 600,
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          backdropFilter: "blur(10px)",
+          cursor: "pointer",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+        }}
+      >
+        <BarChart3 size={14} color="oklch(0.57 0.26 22)" />
+        Métricas do Funil
+      </button>
+
+      {showMetricsModal && (
+        <MetricsModal onClose={() => setShowMetricsModal(false)} />
+      )}
+
+      {currentStep === "quiz" && (
+        <QuizFunnel onComplete={handleQuizComplete} />
+      )}
+
+      {currentStep === "analyzing" && (
+        <AnalyzingScreen target={targetInput} onFinish={handleAnalysisFinish} />
+      )}
+
+      {currentStep === "landing" && (
+        <>
+          {/* Banner de resultado personalizado pós-quiz */}
+          <div
+            style={{
+              background: "linear-gradient(90deg, oklch(0.57 0.26 22), oklch(0.40 0.18 15))",
+              color: "white",
+              padding: "14px 20px",
+              textAlign: "center",
+              fontSize: "clamp(13px, 2.5vw, 15px)",
+              fontWeight: 700,
+              boxShadow: "0 4px 20px oklch(0.57 0.26 22 / 0.4)",
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+            }}
+          >
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <AlertTriangle size={18} />
+              ANÁLISE CONCLUÍDA PARA:{" "}
+              <span style={{ textDecoration: "underline", textTransform: "uppercase" }}>
+                {targetInput || "PERFIL SELECIONADO"}
+              </span>
+              {" "}— 89% de probabilidade de conversas ocultas. Acesso liberado abaixo!
+            </span>
+          </div>
+
+          <UrgencyTicker />
+          <main onClick={(e) => {
+            const targetEl = e.target as HTMLElement;
+            if (targetEl.closest(`a[href="${CHECKOUT_URL}"]`)) {
+              handleCheckoutClick();
+            }
+          }}>
+            <Hero />
+            <SocialProof />
+            <HowItWorks />
+            <WhatYouWillSee />
+            <Testimonials />
+            <UrgencyBanner />
+            <Pricing />
+            <FAQ />
+            <FinalCTA />
+          </main>
+          <Footer />
+        </>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// QUIZ FUNNEL COMPONENT (ALTA CONVERSÃO)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function QuizFunnel({
+  onComplete,
+}: {
+  onComplete: (target: string, answers: Record<number, any>) => void;
+}) {
+  const [stepIndex, setStepIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState<Record<number, any>>({});
+  const [selectedMulti, setSelectedMulti] = useState<string[]>([]);
+  const [targetInput, setTargetInput] = useState("");
+  const [inputError, setInputError] = useState("");
+
+  const quizSteps = [
+    {
+      id: 1,
+      title: "Qual é a sua principal suspeita com a sua parceira?",
+      subtitle: "Selecione a situação que mais se aproxima da sua realidade atual.",
+      options: [
+        {
+          icon: "📱",
+          text: "Esconde o celular, vira a tela ou trocou a senha recentemente",
+          badge: "Alta Freqüência",
+        },
+        {
+          icon: "💬",
+          text: "Passa horas no WhatsApp ou Instagram em horários estranhos",
+          badge: "Suspeita Online",
+        },
+        {
+          icon: "⚡",
+          text: "O comportamento dela mudou e ela está mais fria ou distante comigo",
+          badge: "Mudança Repentina",
+        },
+        {
+          icon: "🚨",
+          text: "Tenho quase certeza que ela conversa com outro, só preciso de provas",
+          badge: "Urgente",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Quais destas atitudes você notou nela recentemente?",
+      subtitle: "Você pode selecionar mais de uma opção antes de avançar.",
+      isMulti: true,
+      options: [
+        { icon: "🔒", text: "Apaga conversas e limpa o histórico de mensagens" },
+        { icon: "🌙", text: "Deixa o celular no modo silencioso ou virado para baixo" },
+        { icon: "📸", text: "Recebe notificações e fecha o aplicativo quando eu chego perto" },
+        { icon: "📍", text: "Demora a responder e dá desculpas vagas sobre onde estava" },
+      ],
+    },
+    {
+      id: 3,
+      title: "Qual aplicativo você deseja investigar primeiro?",
+      subtitle: "Nossa tecnologia analisa múltiplos canais de comunicação.",
+      options: [
+        {
+          icon: "🟢",
+          text: "WhatsApp (conversas privadas, áudios e mensagens apagadas)",
+          badge: "Mais Procurado",
+        },
+        {
+          icon: "📸",
+          text: "Instagram (DMs secretas, conversas temporárias e seguidores)",
+          badge: "Populares",
+        },
+        {
+          icon: "📍",
+          text: "Localização em tempo real & histórico de lugares freqüentados",
+          badge: "GPS Oculto",
+        },
+        {
+          icon: "🔥",
+          text: "Varredura Completa (Acesso a todas as redes simultaneamente)",
+          badge: "Recomendado",
+        },
+      ],
+    },
+  ];
+
+  const currentQ = quizSteps[stepIndex];
+  const progressPercent = Math.round(((stepIndex + 1) / 4) * 100);
+
+  const handleSingleSelect = (optionText: string) => {
+    const updated = { ...userAnswers, [currentQ.id]: optionText };
+    setUserAnswers(updated);
+
+    if (stepIndex < quizSteps.length - 1) {
+      const nextStep = stepIndex + 1;
+      setStepIndex(nextStep);
+      trackFunnelEvent(`quiz_step_${nextStep + 1}` as FunnelStep);
+    } else {
+      setStepIndex(3); // Go to step 4 (Input target)
+      trackFunnelEvent("quiz_step_4");
+    }
+  };
+
+  const handleMultiToggle = (optionText: string) => {
+    if (selectedMulti.includes(optionText)) {
+      setSelectedMulti(selectedMulti.filter((item) => item !== optionText));
+    } else {
+      setSelectedMulti([...selectedMulti, optionText]);
+    }
+  };
+
+  const handleMultiSubmit = () => {
+    if (selectedMulti.length === 0) {
+      return;
+    }
+    const updated = { ...userAnswers, [currentQ.id]: selectedMulti };
+    setUserAnswers(updated);
+    setStepIndex(stepIndex + 1);
+    trackFunnelEvent(`quiz_step_${stepIndex + 2}` as FunnelStep);
+  };
+
+  const handleFinalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!targetInput.trim() || targetInput.trim().length < 3) {
+      setInputError("Digite o @ do Instagram ou número de WhatsApp válido.");
+      return;
+    }
+    setInputError("");
+    onComplete(targetInput.trim(), userAnswers);
+  };
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        maxWidth: "600px",
+        margin: "0 auto",
+        padding: "24px 20px 40px",
+      }}
+    >
+      {/* Quiz Top Header */}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Eye size={22} color="oklch(0.57 0.26 22)" />
+            <span
+              style={{
+                fontFamily: "'Sora', system-ui, sans-serif",
+                fontWeight: 800,
+                fontSize: "18px",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Espião
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              background: "oklch(0.14 0.015 20)",
+              border: "1px solid oklch(1 0 0 / 10%)",
+              borderRadius: "999px",
+              padding: "4px 12px",
+              fontSize: "12px",
+              color: "oklch(0.65 0.03 30)",
+            }}
+          >
+            <span
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                background: "#22c55e",
+                boxShadow: "0 0 10px #22c55e",
+                display: "inline-block",
+              }}
+            />
+            <span>342 análises ativas</span>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div style={{ marginBottom: "28px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontSize: "12px",
+              color: "oklch(0.60 0.03 30)",
+              marginBottom: "8px",
+              fontWeight: 600,
+            }}
+          >
+            <span>Passo {stepIndex + 1} de 4</span>
+            <span style={{ color: "oklch(0.57 0.26 22)" }}>{progressPercent}% Concluído</span>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              height: "8px",
+              background: "oklch(0.14 0.015 20)",
+              borderRadius: "999px",
+              overflow: "hidden",
+              border: "1px solid oklch(1 0 0 / 6%)",
+            }}
+          >
+            <div
+              style={{
+                width: `${progressPercent}%`,
+                height: "100%",
+                background: "linear-gradient(90deg, oklch(0.57 0.26 22), oklch(0.70 0.20 22))",
+                boxShadow: "0 0 15px oklch(0.57 0.26 22)",
+                transition: "width 0.3s ease",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* QUIZ STEP CONTENT (Steps 1, 2, 3) */}
+        {stepIndex < 3 && (
+          <div>
+            <div style={{ marginBottom: "24px" }}>
+              <h1
+                style={{
+                  fontFamily: "'Sora', system-ui, sans-serif",
+                  fontSize: "clamp(1.4rem, 4vw, 1.8rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.25,
+                  marginBottom: "8px",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {currentQ.title}
+              </h1>
+              <p style={{ fontSize: "14px", color: "oklch(0.65 0.03 30)", lineHeight: 1.5 }}>
+                {currentQ.subtitle}
+              </p>
+            </div>
+
+            {/* SINGLE CHOICE OPTIONS */}
+            {!currentQ.isMulti && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                {currentQ.options.map((opt) => (
+                  <button
+                    key={opt.text}
+                    onClick={() => handleSingleSelect(opt.text)}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      background: "oklch(0.11 0.015 20)",
+                      border: "1px solid oklch(1 0 0 / 10%)",
+                      borderRadius: "14px",
+                      padding: "18px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "14px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "oklch(0.57 0.26 22 / 0.6)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.background = "oklch(0.14 0.02 22)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "oklch(1 0 0 / 10%)";
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.background = "oklch(0.11 0.015 20)";
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                      <span style={{ fontSize: "24px" }}>{opt.icon}</span>
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: 600,
+                          color: "oklch(0.95 0.005 30)",
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {opt.text}
+                      </span>
+                    </div>
+                    {opt.badge && (
+                      <span
+                        style={{
+                          fontSize: "10px",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                          background: "oklch(0.57 0.26 22 / 0.18)",
+                          color: "oklch(0.80 0.14 22)",
+                          border: "1px solid oklch(0.57 0.26 22 / 0.3)",
+                          borderRadius: "999px",
+                          padding: "4px 8px",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {opt.badge}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* MULTI CHOICE OPTIONS (Step 2) */}
+            {currentQ.isMulti && (
+              <div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
+                  {currentQ.options.map((opt) => {
+                    const isSelected = selectedMulti.includes(opt.text);
+                    return (
+                      <button
+                        key={opt.text}
+                        onClick={() => handleMultiToggle(opt.text)}
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          background: isSelected
+                            ? "oklch(0.57 0.26 22 / 0.15)"
+                            : "oklch(0.11 0.015 20)",
+                          border: isSelected
+                            ? "1px solid oklch(0.57 0.26 22 / 0.7)"
+                            : "1px solid oklch(1 0 0 / 10%)",
+                          borderRadius: "14px",
+                          padding: "18px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: "14px",
+                          cursor: "pointer",
+                          transition: "all 0.15s ease",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+                          <span style={{ fontSize: "22px" }}>{opt.icon}</span>
+                          <span
+                            style={{
+                              fontSize: "14px",
+                              fontWeight: 600,
+                              color: isSelected ? "white" : "oklch(0.92 0.005 30)",
+                              lineHeight: 1.4,
+                            }}
+                          >
+                            {opt.text}
+                          </span>
+                        </div>
+                        <div
+                          style={{
+                            width: "22px",
+                            height: "22px",
+                            borderRadius: "6px",
+                            border: isSelected
+                              ? "none"
+                              : "2px solid oklch(0.40 0.02 30)",
+                            background: isSelected ? "oklch(0.57 0.26 22)" : "transparent",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                          }}
+                        >
+                          {isSelected && <Check size={14} color="white" strokeWidth={3} />}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  onClick={handleMultiSubmit}
+                  disabled={selectedMulti.length === 0}
+                  style={{
+                    width: "100%",
+                    background:
+                      selectedMulti.length > 0
+                        ? "oklch(0.57 0.26 22)"
+                        : "oklch(0.20 0.015 20)",
+                    color: selectedMulti.length > 0 ? "white" : "oklch(0.45 0.02 30)",
+                    padding: "16px",
+                    borderRadius: "12px",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    border: "none",
+                    cursor: selectedMulti.length > 0 ? "pointer" : "not-allowed",
+                    boxShadow:
+                      selectedMulti.length > 0
+                        ? "0 0 30px oklch(0.57 0.26 22 / 0.5)"
+                        : "none",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  Continuar Análise <ArrowRight size={18} />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* STEP 4: TARGET INPUT & FINAL QUALIFICATION */}
+        {stepIndex === 3 && (
+          <div>
+            <div style={{ textAlign: "center", marginBottom: "28px" }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "56px",
+                  height: "56px",
+                  borderRadius: "50%",
+                  background: "oklch(0.57 0.26 22 / 0.15)",
+                  border: "1px solid oklch(0.57 0.26 22 / 0.4)",
+                  marginBottom: "16px",
+                  boxShadow: "0 0 30px oklch(0.57 0.26 22 / 0.3)",
+                }}
+              >
+                <Search size={28} color="oklch(0.57 0.26 22)" />
+              </div>
+              <h1
+                style={{
+                  fontFamily: "'Sora', system-ui, sans-serif",
+                  fontSize: "clamp(1.4rem, 4vw, 1.8rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.25,
+                  marginBottom: "10px",
+                }}
+              >
+                Informe o perfil ou WhatsApp para consultar a disponibilidade:
+              </h1>
+              <p style={{ fontSize: "14px", color: "oklch(0.65 0.03 30)", lineHeight: 1.5 }}>
+                A consulta é <strong style={{ color: "white" }}>100% anônima e segura</strong>. A sua parceira JAMAIS saberá que esta busca foi realizada.
+              </p>
+            </div>
+
+            <form onSubmit={handleFinalSubmit}>
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "oklch(0.80 0.02 30)",
+                    marginBottom: "8px",
+                  }}
+                >
+                  @ do Instagram ou número de WhatsApp dela:
+                </label>
+                <input
+                  type="text"
+                  placeholder="Ex: @nome_dela ou (11) 99887-6655"
+                  value={targetInput}
+                  onChange={(e) => setTargetInput(e.target.value)}
+                  style={{
+                    width: "100%",
+                    background: "oklch(0.12 0.015 20)",
+                    border: inputError
+                      ? "1px solid oklch(0.65 0.25 22)"
+                      : "1px solid oklch(0.57 0.26 22 / 0.4)",
+                    borderRadius: "12px",
+                    padding: "16px",
+                    fontSize: "15px",
+                    color: "white",
+                    outline: "none",
+                    boxShadow: "0 0 20px oklch(0.57 0.26 22 / 0.15)",
+                  }}
+                />
+                {inputError && (
+                  <div style={{ color: "oklch(0.65 0.25 22)", fontSize: "12px", marginTop: "6px" }}>
+                    {inputError}
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  background: "oklch(0.57 0.26 22)",
+                  color: "white",
+                  padding: "18px",
+                  borderRadius: "12px",
+                  fontSize: "16px",
+                  fontWeight: 800,
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow:
+                    "0 0 40px oklch(0.57 0.26 22 / 0.6), 0 10px 30px rgba(0,0,0,0.5)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                  marginBottom: "20px",
+                }}
+              >
+                ⚡ INICIAR VARREDURA E VERIFICAR AGORA
+                <ArrowRight size={18} />
+              </button>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "16px",
+                  fontSize: "12px",
+                  color: "oklch(0.55 0.03 30)",
+                }}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <ShieldCheck size={14} color="oklch(0.57 0.26 22)" /> 100% Discreto
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                  <Lock size={14} color="oklch(0.57 0.26 22)" /> Sem registro no aparelho
+                </span>
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
+
+      {/* Footer Disclaimer */}
+      <div style={{ textAlign: "center", marginTop: "32px", fontSize: "11px", color: "oklch(0.40 0.02 30)" }}>
+        🔒 Conexão Criptografada SSL 256-Bit • Consulta anônima e confidencial
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ANALYZING SCREEN COMPONENT (TENSÃO & PERSUASÃO VISUAL)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function AnalyzingScreen({
+  target,
+  onFinish,
+}: {
+  target: string;
+  onFinish: () => void;
+}) {
+  const [progress, setProgress] = useState(0);
+  const [statusLog, setStatusLog] = useState("Iniciando varredura nos servidores...");
+
+  useEffect(() => {
+    const logs = [
+      { p: 15, msg: "🛰️ Conectando aos servidores de varredura segura..." },
+      { p: 40, msg: `📱 Localizando registros de WhatsApp para ${target}...` },
+      { p: 70, msg: "📸 Analisando DMs secretas e conversas recentes no Instagram..." },
+      { p: 90, msg: "⚠️ ALERTA: 3 conversas com alto grau de suspeita detectadas!" },
+      { p: 100, msg: "✅ Relatório gerado com sucesso! Carregando resultados..." },
+    ];
+
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 2;
+      if (current > 100) {
+        current = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          onFinish();
+        }, 800);
+      }
+
+      setProgress(current);
+
+      const matchingLog = logs.find((l) => current >= l.p && current < l.p + 25);
+      if (matchingLog) {
+        setStatusLog(matchingLog.msg);
+      }
+    }, 80);
+
+    return () => clearInterval(interval);
+  }, [target, onFinish]);
+
+  return (
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
+        textAlign: "center",
+        maxWidth: "500px",
+        margin: "0 auto",
+      }}
+    >
+      {/* Animated Glowing Loader */}
+      <div
+        style={{
+          position: "relative",
+          width: "120px",
+          height: "120px",
+          marginBottom: "32px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: "50%",
+            border: "4px solid oklch(0.57 0.26 22 / 0.2)",
+            borderTopColor: "oklch(0.57 0.26 22)",
+            animation: "spin 1s linear infinite",
+            boxShadow: "0 0 30px oklch(0.57 0.26 22 / 0.5)",
+          }}
+        />
+        <Zap size={44} color="oklch(0.57 0.26 22)" />
+      </div>
+
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+
+      <h2
+        style={{
+          fontFamily: "'Sora', system-ui, sans-serif",
+          fontSize: "24px",
+          fontWeight: 800,
+          marginBottom: "12px",
+        }}
+      >
+        Analisando dados de <span style={{ color: "oklch(0.57 0.26 22)" }}>{target}</span>
+      </h2>
+
+      <p
+        style={{
+          fontSize: "14px",
+          color: "oklch(0.70 0.03 30)",
+          marginBottom: "32px",
+          minHeight: "44px",
+          lineHeight: 1.4,
+          fontWeight: 600,
+        }}
+      >
+        {statusLog}
+      </p>
+
+      {/* Progress Bar */}
+      <div style={{ width: "100%", marginBottom: "16px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: "13px",
+            color: "oklch(0.60 0.03 30)",
+            marginBottom: "8px",
+            fontWeight: 700,
+          }}
+        >
+          <span>Progresso da varredura</span>
+          <span style={{ color: "oklch(0.57 0.26 22)" }}>{progress}%</span>
+        </div>
+        <div
+          style={{
+            width: "100%",
+            height: "10px",
+            background: "oklch(0.14 0.015 20)",
+            borderRadius: "999px",
+            overflow: "hidden",
+            border: "1px solid oklch(1 0 0 / 10%)",
+          }}
+        >
+          <div
+            style={{
+              width: `${progress}%`,
+              height: "100%",
+              background: "oklch(0.57 0.26 22)",
+              boxShadow: "0 0 20px oklch(0.57 0.26 22)",
+              transition: "width 0.1s linear",
+            }}
+          />
+        </div>
+      </div>
+
+      <div style={{ fontSize: "12px", color: "oklch(0.50 0.02 30)", marginTop: "20px" }}>
+        🔒 Por favor não feche esta página enquanto o relatório está sendo montado.
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// METRICS & DROP-OFF DASHBOARD MODAL
+// ─────────────────────────────────────────────────────────────────────────────
+
+function MetricsModal({ onClose }: { onClose: () => void }) {
+  const metrics = getFunnelMetrics() || {
+    quiz_step_1: 0,
+    quiz_step_2: 0,
+    quiz_step_3: 0,
+    quiz_step_4: 0,
+    analyzing: 0,
+    landing_page: 0,
+    checkout_click: 0,
+  };
+
+  const step1 = metrics.quiz_step_1 || 0;
+  const step2 = metrics.quiz_step_2 || 0;
+  const step3 = metrics.quiz_step_3 || 0;
+  const step4 = metrics.quiz_step_4 || 0;
+  const analyzing = metrics.analyzing || 0;
+  const landing = metrics.landing_page || 0;
+  const checkout = metrics.checkout_click || 0;
+
+  const calcDrop = (prev: number, curr: number) => {
+    if (prev === 0) return "0%";
+    const drop = ((prev - curr) / prev) * 100;
+    return `${Math.max(0, drop).toFixed(1)}% abandono`;
+  };
+
+  const calcConv = (prev: number, curr: number) => {
+    if (prev === 0) return "0%";
+    const conv = (curr / prev) * 100;
+    return `${conv.toFixed(1)}% avanço`;
+  };
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 99999,
+        background: "rgba(0,0,0,0.85)",
+        backdropFilter: "blur(12px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          background: "oklch(0.11 0.015 20)",
+          border: "1px solid oklch(0.57 0.26 22 / 0.4)",
+          borderRadius: "20px",
+          padding: "28px",
+          maxWidth: "540px",
+          width: "100%",
+          maxHeight: "90vh",
+          overflowY: "auto",
+          boxShadow: "0 0 60px oklch(0.57 0.26 22 / 0.3)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "20px",
+            borderBottom: "1px solid oklch(1 0 0 / 8%)",
+            paddingBottom: "14px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <BarChart3 color="oklch(0.57 0.26 22)" size={24} />
+            <h3 style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: "18px", fontWeight: 800 }}>
+              Métricas do Funil & Abandono
+            </h3>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#aaa",
+              cursor: "pointer",
+              padding: "4px",
+            }}
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <p style={{ fontSize: "13px", color: "oklch(0.65 0.03 30)", marginBottom: "20px", lineHeight: 1.5 }}>
+          Acompanhamento em tempo real de acessos, avanço por etapa do quiz e taxa de conversão final do checkout neste dispositivo/sessão:
+        </p>
+
+        {/* Funnel Flow Table */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
+          {[
+            { label: "1. Iniciaram Quiz (Pergunta 1)", count: step1, drop: "-" },
+            { label: "2. Responderam Pergunta 2", count: step2, drop: calcDrop(step1, step2), conv: calcConv(step1, step2) },
+            { label: "3. Responderam Pergunta 3", count: step3, drop: calcDrop(step2, step3), conv: calcConv(step2, step3) },
+            { label: "4. Preencheram Alvo (Etapa 4)", count: step4, drop: calcDrop(step3, step4), conv: calcConv(step3, step4) },
+            { label: "5. Tela de Varredura (Analyzing)", count: analyzing, drop: calcDrop(step4, analyzing), conv: calcConv(step4, analyzing) },
+            { label: "6. Chegaram na Landing Page", count: landing, drop: calcDrop(analyzing, landing), conv: calcConv(analyzing, landing) },
+            { label: "7. Clicaram no Checkout (Venda)", count: checkout, drop: calcDrop(landing, checkout), conv: calcConv(landing, checkout) },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              style={{
+                background: "oklch(0.14 0.015 20)",
+                border: "1px solid oklch(1 0 0 / 6%)",
+                borderRadius: "10px",
+                padding: "14px 16px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontSize: "13px",
+              }}
+            >
+              <div>
+                <div style={{ fontWeight: 700, color: "white" }}>{item.label}</div>
+                {item.conv && (
+                  <div style={{ fontSize: "11px", color: "#22c55e", marginTop: "2px" }}>
+                    ✓ {item.conv} do passo anterior
+                  </div>
+                )}
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: "16px", fontWeight: 800, color: "oklch(0.57 0.26 22)" }}>
+                  {item.count} acessos
+                </div>
+                {item.drop !== "-" && (
+                  <div style={{ fontSize: "11px", color: "oklch(0.65 0.25 22)" }}>
+                    📉 {item.drop}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Global Funnel Conversion Rate */}
+        <div
+          style={{
+            background: "oklch(0.57 0.26 22 / 0.15)",
+            border: "1px solid oklch(0.57 0.26 22 / 0.4)",
+            borderRadius: "12px",
+            padding: "16px",
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <div style={{ fontSize: "12px", color: "oklch(0.70 0.03 30)", textTransform: "uppercase", fontWeight: 700 }}>
+            Taxa Geral de Conversão do Funil (Quiz -> Checkout)
+          </div>
+          <div style={{ fontSize: "28px", fontWeight: 800, color: "white", marginTop: "4px" }}>
+            {step1 > 0 ? ((checkout / step1) * 100).toFixed(1) : 0}%
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => {
+              clearFunnelMetrics();
+              window.location.reload();
+            }}
+            style={{
+              flex: 1,
+              background: "oklch(0.16 0.02 20)",
+              border: "1px solid oklch(1 0 0 / 10%)",
+              color: "oklch(0.80 0.02 30)",
+              padding: "12px",
+              borderRadius: "10px",
+              fontSize: "13px",
+              fontWeight: 600,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+            }}
+          >
+            <RefreshCw size={14} /> Zerar Métricas
+          </button>
+          <button
+            onClick={onClose}
+            style={{
+              flex: 1,
+              background: "oklch(0.57 0.26 22)",
+              color: "white",
+              padding: "12px",
+              borderRadius: "10px",
+              fontSize: "13px",
+              fontWeight: 700,
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Fechar Dashboard
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
