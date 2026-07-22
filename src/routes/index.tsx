@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { sql } from "@vercel/postgres";
 import {
   Eye,
   ShieldCheck,
@@ -30,8 +32,34 @@ import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 // ─────────────────────────────────────────────────────────────────────────────
 const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
 
+// Server function for automatic Vercel Postgres recording
+const trackDatabaseEventFn = createServerFn({ method: "POST" })
+  .validator((data: { step: string; target?: string }) => data)
+  .handler(async ({ data }) => {
+    try {
+      if (process.env.POSTGRES_URL) {
+        await sql`
+          CREATE TABLE IF NOT EXISTS funnel_events (
+            id SERIAL PRIMARY KEY,
+            step_name VARCHAR(100) NOT NULL,
+            target_input VARCHAR(255),
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+          );
+        `;
+        await sql`
+          INSERT INTO funnel_events (step_name, target_input)
+          VALUES (${data.step}, ${data.target || null});
+        `;
+      }
+      return { success: true };
+    } catch (err) {
+      console.error("Vercel Postgres insert error:", err);
+      return { success: false };
+    }
+  });
+
 // ─────────────────────────────────────────────────────────────────────────────
-// FUNNEL TRACKING SYSTEM (Local Storage & Analytics Dispatcher)
+// FUNNEL TRACKING SYSTEM (Local Storage & Database Dispatcher)
 // ─────────────────────────────────────────────────────────────────────────────
 type FunnelStep =
   | "quiz_step_1"
@@ -75,6 +103,9 @@ function trackFunnelEvent(step: FunnelStep, extraData?: Record<string, any>) {
     }
 
     localStorage.setItem(storageKey, JSON.stringify(data));
+
+    // Send to Vercel Postgres DB automatically in background
+    trackDatabaseEventFn({ data: { step, target: extraData?.target } }).catch(() => {});
 
     // Optional: Dispatch to window analytics if Google Analytics or Pixel exists
     if ((window as any).gtag) {
