@@ -26,7 +26,7 @@ import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 // ─────────────────────────────────────────────────────────────────────────────
 // 👇 URL de checkout
 // ─────────────────────────────────────────────────────────────────────────────
-const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
+const CHECKOUT_URL = "https://pay.cakto.com.br/yvh4p8r_998486";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -2645,7 +2645,7 @@ function FinalCTA() {
               marginBottom: "16px",
             }}
           >
-            ⚡ Descobrir a Verdade Agora — R$19,90 <ArrowRight size={18} />
+            ⚡ Descobrir a Verdade Agora — R$24,90 <ArrowRight size={18} />
           </a>
 
           <div style={{ fontSize: "13px", color: "oklch(0.50 0.02 30)" }}>
