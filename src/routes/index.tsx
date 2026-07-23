@@ -2123,97 +2123,91 @@ function UrgencyBanner() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Pricing() {
-  const [wantsOrderBump, setWantsOrderBump] = useState(false);
-  const currentPrice = wantsOrderBump ? "24,90" : "19,90";
-  const COMBO_URL = "https://pay.cakto.com.br/yvh4p8r_998486";
-  const currentCheckoutUrl = wantsOrderBump ? COMBO_URL : CHECKOUT_URL;
-  const features = [
-    "Monitoramento completo do WhatsApp",
-    "Conversas e DMs do Instagram",
-    "Histórico de localização em tempo real",
-    "Fotos e vídeos trocados",
-    "Registro de chamadas e ligações",
-    "✨ Acesso VITALÍCIO — pague uma vez, use para sempre",
-    "Suporte via WhatsApp",
-    "Garantia de 7 dias ou seu dinheiro de volta",
+  const COMBO_URL = 'https://pay.cakto.com.br/yvh4p8r_998486';
+  const CHECKOUT_URL = 'https://pay.cakto.com.br/zv5heyg_994345';
+  const baseFeatures = [
+    'Monitoramento completo do WhatsApp',
+    'Conversas e DMs do Instagram',
+    'Histórico de localização em tempo real',
+    'Fotos e vídeos trocados',
+    'Registro de chamadas e ligações',
+    '✨ Acesso VITALÍCIO — pague uma vez, use para sempre',
+    'Suporte via WhatsApp',
+    'Garantia de 7 dias ou seu dinheiro de volta',
+  ];
+
+  const comboFeatures = [
+    ...baseFeatures,
+    '🎁 Guia: Como Recuperar Mensagens Apagadas (Passo a passo)',
   ];
 
   return (
     <section
-      id="planos"
+      id='planos'
       style={{
-        maxWidth: "1100px",
-        margin: "0 auto 80px",
-        padding: "0 24px",
+        maxWidth: '1100px',
+        margin: '0 auto 80px',
+        padding: '0 24px',
       }}
     >
-      <div style={{ textAlign: "center", marginBottom: "48px" }}>
-        <SectionBadge>Preço</SectionBadge>
+      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+        <SectionBadge>Planos Disponíveis</SectionBadge>
         <h2
           style={{
             fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+            fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
             fontWeight: 700,
-            marginTop: "12px",
-            letterSpacing: "-0.02em",
+            marginTop: '12px',
+            letterSpacing: '-0.02em',
           }}
         >
-          Quero descobrir{" "}
-          <span style={{ color: "oklch(0.57 0.26 22)" }}>toda a verdade</span>
+          Escolha o seu <span style={{ color: 'oklch(0.57 0.26 22)' }}>Acesso</span>
         </h2>
-        <p style={{ color: "oklch(0.60 0.03 30)", marginTop: "10px" }}>
-          O valor para descobrir a verdade e voltar a dormir em paz.
+        <p style={{ color: 'oklch(0.60 0.03 30)', marginTop: '10px' }}>
+          Selecione a melhor opção para descobrir a verdade e voltar a dormir em paz.
         </p>
       </div>
 
-      <div style={{ maxWidth: "480px", margin: "0 auto" }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: '24px',
+          maxWidth: '900px',
+          margin: '0 auto',
+          alignItems: 'stretch',
+        }}
+      >
+        {/* PLANO BÁSICO */}
         <div
           style={{
-            background: "oklch(0.11 0.015 20)",
-            border: "2px solid oklch(0.57 0.26 22 / 0.5)",
-            borderRadius: "20px",
-            padding: "40px",
-            boxShadow: "0 0 60px oklch(0.57 0.26 22 / 0.15), 0 20px 60px -20px oklch(0 0 0 / 0.6)",
-            position: "relative",
+            background: 'oklch(0.11 0.015 20)',
+            border: '1px solid oklch(1 0 0 / 15%)',
+            borderRadius: '20px',
+            padding: '32px',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          {/* Popular badge */}
-          <div
-            style={{
-              position: "absolute",
-              top: "-14px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              background: "oklch(0.57 0.26 22)",
-              color: "white",
-              padding: "6px 20px",
-              borderRadius: "999px",
-              fontSize: "12px",
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-              whiteSpace: "nowrap",
-            }}
-          >
-            🔥 MAIS VENDIDO — OFERTA DE LANÇAMENTO
-          </div>
-
-          <div style={{ textAlign: "center", marginBottom: "28px" }}>
-            <div style={{ fontSize: "14px", color: "oklch(0.55 0.03 30)", marginBottom: "4px" }}>
-              ♾️ Acesso Vitalício — Pague uma vez, use para sempre
+          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'white', marginBottom: '8px' }}>Acesso Padrão</h3>
+            <div style={{ fontSize: '12px', color: 'oklch(0.55 0.03 30)', marginBottom: '8px' }}>
+              Apenas o sistema espião
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "center",
-                gap: "8px",
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'center',
+                gap: '8px',
               }}
             >
               <span
                 style={{
-                  fontSize: "16px",
-                  color: "oklch(0.50 0.03 30)",
-                  textDecoration: "line-through",
+                  fontSize: '14px',
+                  color: 'oklch(0.50 0.03 30)',
+                  textDecoration: 'line-through',
                 }}
               >
                 R$97
@@ -2221,154 +2215,210 @@ function Pricing() {
               <span
                 style={{
                   fontFamily: "'Sora', system-ui, sans-serif",
-                  fontSize: "58px",
+                  fontSize: '42px',
                   fontWeight: 800,
-                  color: "oklch(0.97 0.005 30)",
+                  color: 'oklch(0.97 0.005 30)',
                   lineHeight: 1,
                 }}
               >
-                R${currentPrice}
+                R$19,90
               </span>
-            </div>
-            <div
-              style={{
-                display: "inline-block",
-                background: "oklch(0.57 0.26 22 / 0.15)",
-                color: "oklch(0.80 0.15 22)",
-                padding: "4px 12px",
-                borderRadius: "999px",
-                fontSize: "12px",
-                fontWeight: 700,
-                marginTop: "8px",
-              }}
-            >
-              −70% DE DESCONTO
             </div>
           </div>
 
-          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 28px", display: "flex", flexDirection: "column", gap: "12px" }}>
-            {features.map((f) => (
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: '12px', flexGrow: 1 }}>
+            {baseFeatures.map((f) => (
               <li
                 key={f}
-                style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "14px" }}
+                style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '13px' }}
               >
-                <CheckCircle2 size={16} color="oklch(0.57 0.26 22)" style={{ flexShrink: 0 }} />
-                <span style={{ color: "oklch(0.82 0.02 30)" }}>{f}</span>
+                <CheckCircle2 size={16} color="oklch(0.40 0.03 30)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <span style={{ color: 'oklch(0.70 0.02 30)' }}>{f}</span>
               </li>
             ))}
           </ul>
 
-          {/* ORDER BUMP SECTION */}
-          <div
-            style={{
-              background: wantsOrderBump ? "oklch(0.57 0.26 22 / 0.1)" : "oklch(0.14 0.015 20)",
-              border: wantsOrderBump ? "1px solid oklch(0.57 0.26 22)" : "1px dashed oklch(1 0 0 / 20%)",
-              borderRadius: "12px",
-              padding: "16px",
-              marginBottom: "20px",
-              cursor: "pointer",
-              transition: "all 0.2s",
-              display: "flex",
-              gap: "12px",
-              alignItems: "flex-start",
-            }}
-            onClick={() => setWantsOrderBump(!wantsOrderBump)}
-          >
-            <div
-              style={{
-                width: "22px",
-                height: "22px",
-                borderRadius: "6px",
-                border: wantsOrderBump ? "none" : "2px solid oklch(0.40 0.02 30)",
-                background: wantsOrderBump ? "oklch(0.57 0.26 22)" : "transparent",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                marginTop: "2px",
-              }}
-            >
-              {wantsOrderBump && <Check size={14} color="white" strokeWidth={3} />}
-            </div>
-            <div>
-              <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "4px" }}>
-                Sim! Quero adicionar o Guia de Recuperar Mensagens Apagadas
-              </div>
-              <div style={{ fontSize: "13px", color: "oklch(0.70 0.03 30)", lineHeight: 1.4 }}>
-                Descubra o truque secreto para ler o histórico de mensagens que foram apagadas ANTES de você ter o app. Apenas <strong style={{ color: "oklch(0.57 0.26 22)" }}>+R$ 5,00</strong>.
-              </div>
-            </div>
-          </div>
-
           <a
-            href={currentCheckoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={CHECKOUT_URL}
+            target='_blank'
+            rel='noopener noreferrer'
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-              background: "oklch(0.57 0.26 22)",
-              color: "white",
-              padding: "18px",
-              borderRadius: "12px",
-              fontSize: "16px",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              background: 'oklch(0.18 0.015 20)',
+              border: '1px solid oklch(1 0 0 / 20%)',
+              color: 'white',
+              padding: '16px',
+              borderRadius: '12px',
+              fontSize: '15px',
               fontWeight: 700,
-              textDecoration: "none",
-              boxShadow: "0 0 40px oklch(0.57 0.26 22 / 0.5)",
-              marginBottom: "14px",
-              transition: "transform 0.15s",
+              textDecoration: 'none',
+              transition: 'all 0.15s',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'oklch(0.25 0.015 20)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'oklch(0.18 0.015 20)')}
           >
-            💖 Quero a Minha Paz de Volta — R${currentPrice} <ArrowRight size={16} />
+            Plano Básico <ArrowRight size={16} />
           </a>
-
-          <div style={{ textAlign: "center" }}>
-            <p style={{ fontSize: "12px", color: "oklch(0.55 0.02 30)", lineHeight: 1.6 }}>
-              🔒 Pagamento 100% seguro · Garantia de 7 dias
-              <br />
-              Acesso imediato após confirmação do pagamento
-            </p>
-          </div>
         </div>
 
-        {/* Payment methods */}
+        {/* PLANO COMBO */}
         <div
           style={{
-            textAlign: "center",
-            marginTop: "20px",
-            fontSize: "12px",
-            color: "oklch(0.50 0.02 30)",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "8px",
-            alignItems: "center",
+            background: 'oklch(0.11 0.015 20)',
+            border: '2px solid oklch(0.57 0.26 22 / 0.5)',
+            borderRadius: '20px',
+            padding: '40px',
+            boxShadow: '0 0 60px oklch(0.57 0.26 22 / 0.15), 0 20px 60px -20px oklch(0 0 0 / 0.6)',
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          <span>Aceita:</span>
-          {["💳 Cartão de crédito", "📱 Pix", "🏦 Boleto"].map((p) => (
-            <span
-              key={p}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-14px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: 'oklch(0.57 0.26 22)',
+              color: 'white',
+              padding: '6px 20px',
+              borderRadius: '999px',
+              fontSize: '12px',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            🔥 MAIS VENDIDO — OFERTA COMPLETA
+          </div>
+
+          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, color: 'oklch(0.57 0.26 22)', marginBottom: '8px' }}>Acesso VIP + Guia</h3>
+            <div style={{ fontSize: '13px', color: 'oklch(0.80 0.03 30)', marginBottom: '8px' }}>
+              Sistema Espião + Guia Mensagens Apagadas
+            </div>
+            <div
               style={{
-                background: "oklch(0.14 0.015 20)",
-                border: "1px solid oklch(1 0 0 / 8%)",
-                borderRadius: "6px",
-                padding: "3px 8px",
-                fontSize: "11px",
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'center',
+                gap: '8px',
               }}
             >
-              {p}
-            </span>
-          ))}
+              <span
+                style={{
+                  fontSize: '16px',
+                  color: 'oklch(0.50 0.03 30)',
+                  textDecoration: 'line-through',
+                }}
+              >
+                R$147
+              </span>
+              <span
+                style={{
+                  fontFamily: "'Sora', system-ui, sans-serif",
+                  fontSize: '52px',
+                  fontWeight: 800,
+                  color: 'oklch(0.97 0.005 30)',
+                  lineHeight: 1,
+                }}
+              >
+                R$24,90
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'inline-block',
+                background: 'oklch(0.57 0.26 22 / 0.15)',
+                color: 'oklch(0.80 0.15 22)',
+                padding: '4px 12px',
+                borderRadius: '999px',
+                fontSize: '11px',
+                fontWeight: 700,
+                marginTop: '8px',
+              }}
+            >
+              MAIOR CUSTO-BENEFÍCIO
+            </div>
+          </div>
+
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: '12px', flexGrow: 1 }}>
+            {comboFeatures.map((f, i) => (
+              <li
+                key={f}
+                style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '14px' }}
+              >
+                <CheckCircle2 size={16} color="oklch(0.57 0.26 22)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <span style={{ color: i === comboFeatures.length - 1 ? 'white' : 'oklch(0.82 0.02 30)', fontWeight: i === comboFeatures.length - 1 ? 600 : 400 }}>{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={COMBO_URL}
+            target='_blank'
+            rel='noopener noreferrer'
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              background: 'oklch(0.57 0.26 22)',
+              color: 'white',
+              padding: '18px',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 0 40px oklch(0.57 0.26 22 / 0.5)',
+              transition: 'transform 0.15s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
+          >
+            💖 Quero a Minha Paz de Volta <ArrowRight size={16} />
+          </a>
         </div>
+      </div>
+
+      {/* Payment methods */}
+      <div
+        style={{
+          textAlign: 'center',
+          marginTop: '32px',
+          fontSize: '12px',
+          color: 'oklch(0.50 0.02 30)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          gap: '8px',
+          alignItems: 'center',
+        }}
+      >
+        <span>Pagamento 100% Seguro:</span>
+        {['💳 Cartão de crédito', '📱 Pix', '🏦 Boleto'].map((p) => (
+          <span
+            key={p}
+            style={{
+              background: 'oklch(0.14 0.015 20)',
+              border: '1px solid oklch(1 0 0 / 8%)',
+              borderRadius: '6px',
+              padding: '3px 8px',
+              fontSize: '11px',
+            }}
+          >
+            {p}
+          </span>
+        ))}
       </div>
     </section>
   );
 }
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FAQ
