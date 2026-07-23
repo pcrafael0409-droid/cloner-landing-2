@@ -2123,6 +2123,10 @@ function UrgencyBanner() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Pricing() {
+  const [wantsOrderBump, setWantsOrderBump] = useState(false);
+  const currentPrice = wantsOrderBump ? "24,90" : "19,90";
+  const COMBO_URL = "https://pay.cakto.com.br/yvh4p8r_998486";
+  const currentCheckoutUrl = wantsOrderBump ? COMBO_URL : CHECKOUT_URL;
   const features = [
     "Monitoramento completo do WhatsApp",
     "Conversas e DMs do Instagram",
@@ -2223,7 +2227,7 @@ function Pricing() {
                   lineHeight: 1,
                 }}
               >
-                R$19,90
+                R${currentPrice}
               </span>
             </div>
             <div
@@ -2254,8 +2258,50 @@ function Pricing() {
             ))}
           </ul>
 
+          {/* ORDER BUMP SECTION */}
+          <div
+            style={{
+              background: wantsOrderBump ? "oklch(0.57 0.26 22 / 0.1)" : "oklch(0.14 0.015 20)",
+              border: wantsOrderBump ? "1px solid oklch(0.57 0.26 22)" : "1px dashed oklch(1 0 0 / 20%)",
+              borderRadius: "12px",
+              padding: "16px",
+              marginBottom: "20px",
+              cursor: "pointer",
+              transition: "all 0.2s",
+              display: "flex",
+              gap: "12px",
+              alignItems: "flex-start",
+            }}
+            onClick={() => setWantsOrderBump(!wantsOrderBump)}
+          >
+            <div
+              style={{
+                width: "22px",
+                height: "22px",
+                borderRadius: "6px",
+                border: wantsOrderBump ? "none" : "2px solid oklch(0.40 0.02 30)",
+                background: wantsOrderBump ? "oklch(0.57 0.26 22)" : "transparent",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+                marginTop: "2px",
+              }}
+            >
+              {wantsOrderBump && <Check size={14} color="white" strokeWidth={3} />}
+            </div>
+            <div>
+              <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "4px" }}>
+                Sim! Quero adicionar o Guia de Recuperar Mensagens Apagadas
+              </div>
+              <div style={{ fontSize: "13px", color: "oklch(0.70 0.03 30)", lineHeight: 1.4 }}>
+                Descubra o truque secreto para ler o histórico de mensagens que foram apagadas ANTES de você ter o app. Apenas <strong style={{ color: "oklch(0.57 0.26 22)" }}>+R$ 5,00</strong>.
+              </div>
+            </div>
+          </div>
+
           <a
-            href={CHECKOUT_URL}
+            href={currentCheckoutUrl}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -2277,7 +2323,7 @@ function Pricing() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            ⚡ Quero a Minha Paz de Volta — R$19,90 <ArrowRight size={16} />
+            💖 Quero a Minha Paz de Volta — R${currentPrice} <ArrowRight size={16} />
           </a>
 
           <div style={{ textAlign: "center" }}>
