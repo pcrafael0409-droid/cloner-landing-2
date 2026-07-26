@@ -121,7 +121,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1777360240363972');
+          fbq('init', '1698844174738668');
           fbq('track', 'PageView');
         `,
       },
@@ -143,7 +143,7 @@ function RootShell({ children }: { children: ReactNode }) {
             height="1"
             width="1"
             style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1777360240363972&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=1698844174738668&ev=PageView&noscript=1"
           />
         </noscript>
       </head>
