@@ -47,21 +47,6 @@ export const Route = createFileRoute("/")({
 // ─────────────────────────────────────────────────────────────────────────────
 
 function LandingPage() {
-  const [currentStep, setCurrentStep] = useState<"quiz" | "analyzing" | "landing">("quiz");
-  const [targetInput, setTargetInput] = useState("");
-  const [answers, setAnswers] = useState<Record<number, any>>({});
-
-  const handleQuizComplete = (target: string, userAnswers: Record<number, any>) => {
-    setTargetInput(target);
-    setAnswers(userAnswers);
-    setCurrentStep("analyzing");
-  };
-
-  const handleAnalysisFinish = () => {
-    setCurrentStep("landing");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <div
       style={{
@@ -71,56 +56,19 @@ function LandingPage() {
         fontFamily: "'Inter', system-ui, sans-serif",
       }}
     >
-      {currentStep === "quiz" && (
-        <QuizFunnel onComplete={handleQuizComplete} />
-      )}
-
-      {currentStep === "analyzing" && (
-        <AnalyzingScreen target={targetInput} onFinish={handleAnalysisFinish} />
-      )}
-
-      {currentStep === "landing" && (
-        <>
-          {/* Banner de resultado personalizado pós-quiz */}
-          <div
-            style={{
-              background: "linear-gradient(90deg, oklch(0.57 0.26 22), oklch(0.40 0.18 15))",
-              color: "white",
-              padding: "14px 20px",
-              textAlign: "center",
-              fontSize: "clamp(13px, 2.5vw, 15px)",
-              fontWeight: 700,
-              boxShadow: "0 4px 20px oklch(0.57 0.26 22 / 0.4)",
-              position: "sticky",
-              top: 0,
-              zIndex: 100,
-            }}
-          >
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-              <AlertTriangle size={18} />
-              ANÁLISE CONCLUÍDA PARA:{" "}
-              <span style={{ textDecoration: "underline", textTransform: "uppercase" }}>
-                {targetInput || "PERFIL SELECIONADO"}
-              </span>
-              {" "}— 97% de probabilidade de conversas ocultas. Acesso liberado abaixo!
-            </span>
-          </div>
-
-          <UrgencyTicker />
-          <main>
-            <Hero />
-            <SocialProof />
-            <HowItWorks />
-            <WhatYouWillSee />
-            <Testimonials />
-            <UrgencyBanner />
-            <Pricing />
-            <FAQ />
-            <FinalCTA />
-          </main>
-          <Footer />
-        </>
-      )}
+      <UrgencyTicker />
+      <main>
+        <Hero />
+        <SocialProof />
+        <HowItWorks />
+        <WhatYouWillSee />
+        <Testimonials />
+        <UrgencyBanner />
+        <Pricing />
+        <FAQ />
+        <FinalCTA />
+      </main>
+      <Footer />
     </div>
   );
 }
